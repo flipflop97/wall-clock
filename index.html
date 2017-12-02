@@ -6,21 +6,39 @@
             var weekDays = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
             var months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
 
-            window.setInterval(function(){
-                var dayDiv = document.getElementById('dayDiv');
-                var dateDiv = document.getElementById('dateDiv');
-                var timeDiv = document.getElementById('timeDiv');
+            var dayLabel;
+            var dateLabel;
+            var timeLabel;
 
+            function update() {
                 var now = new Date;
 
                 var day = (weekDays[now.getDay()] + '').toUpperCase();
                 var date = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-                var time = now.toLocaleTimeString('nl-NL', { hour: "numeric", minute: "numeric"});
+                var time = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
 
-                dayDiv.innerHTML = day;
-                dateDiv.innerHTML = date;
-                timeDiv.innerHTML = time;
-            }, 1000)
+                dayLabel.innerHTML = day;
+                dateLabel.innerHTML = date;
+                timeLabel.innerHTML = time;
+            }
+
+            function cssPropertyValueSupported(prop, value) {
+                var d = document.createElement('div');
+                d.style[prop] = value;
+                return d.style[prop] === value;
+            }
+
+            window.onload = function() {
+                if (!cssPropertyValueSupported('font-size', '1vw')) {
+                    var infoTable = document.getElementById('infoTable');
+                    infoTable.style = 'font-size: 110px;';
+                }
+
+                dayLabel  = document.getElementById('dayLabel');
+                dateLabel = document.getElementById('dateLabel');
+                timeLabel = document.getElementById('timeLabel');
+                window.setInterval(update, 1000);
+            };
         </script>
         <style>
             body {
@@ -38,13 +56,13 @@
         </style>
     </head>
     <body>
-        <table>
+        <table id="infoTable">
             <tr>
-                <td id="dayDiv"></td>
+                <td id="dayLabel"></td>
             </tr><tr>
-                <td id="dateDiv"></td>
+                <td id="dateLabel"></td>
             </tr><tr>
-                <td id="timeDiv"></td>
+                <td id="timeLabel"></td>
             </tr>
         </table>
     </body>
