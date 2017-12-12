@@ -23,18 +23,7 @@
                 timeLabel.innerHTML = time;
             }
 
-            function cssPropertyValueSupported(prop, value) {
-                var d = document.createElement('div');
-                d.style[prop] = value;
-                return d.style[prop] === value;
-            }
-
             window.onload = function() {
-                if (!cssPropertyValueSupported('font-size', '1vw')) {
-                    var infoTable = document.getElementById('infoTable');
-                    infoTable.style = 'font-size: 110px;';
-                }
-
                 dayLabel  = document.getElementById('dayLabel');
                 dateLabel = document.getElementById('dateLabel');
                 timeLabel = document.getElementById('timeLabel');
@@ -49,7 +38,7 @@
             }
 
             table {
-                font-size: 11vw;
+                font-size: 110px;;
                 text-align: center;
                 width: 100%;
                 height: 100%;
